@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Grievance - Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f4f6f8; --surface: #ffffff; --card: #ffffff; --border: #dfe3e8;
+    --fg: #1a2b3c; --muted: #6b7c8d; --accent: #0e7c6b; --accent-light: rgba(14,124,107,0.08);
+    --error: #c43e3e; --amber: #d4860a; --amber-light: rgba(212,134,10,0.1);
+    --radius: 14px; --shadow-md: 0 4px 20px rgba(0,0,0,0.06); --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; }
+
+  /* NAVBAR */
+  nav { background: white; border-bottom: 1px solid var(--border); padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.5rem; color: var(--fg); text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-weight: 700; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-btn { background: var(--accent); color: white !important; padding: 10px 20px; border-radius: 8px; }
+  .nav-btn:hover { background: #0b6b5c !important; }
+
+  main { max-width: 800px; margin: 3rem auto; padding: 0 1.5rem; }
+  
+  .search-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; box-shadow: var(--shadow-lg); margin-bottom: 2rem; }
+  .search-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .search-card h2 span { color: var(--accent); }
+  .search-card p { color: var(--muted); margin-bottom: 1.5rem; }
+  .search-box { display: flex; gap: 10px; }
+  .search-box input { flex: 1; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+  .search-box input:focus { border-color: var(--accent); }
+  .search-btn { padding: 14px 24px; background: var(--accent); color: white; border: none; border-radius: var(--radius); font-weight: 700; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .search-btn:hover { background: #0b6b5c; }
+
+  .status-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .status-Pending { background: var(--amber-light); color: var(--amber); }
+  .status-Approved { background: var(--accent-light); color: var(--accent); }
+  .status-Resolved { background: rgba(14,124,107,0.15); color: #0a5c50; }
+  .status-Rejected { background: rgba(196,62,62,0.08); color: var(--error); }
+  .status-InProgress { background: rgba(54,114,214,0.1); color: #3672d6; }
+
+  .result-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); margin-bottom: 1rem; transition: border-color 0.2s; }
+  .result-card:hover { border-color: var(--accent); }
+  .result-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .result-title { font-weight: 700; font-size: 1.1rem; }
+  .result-meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 8px; }
+  .result-meta i { margin-right: 5px; color: var(--accent); }
+  .result-desc { font-size: 0.9rem; color: #556270; line-height: 1.5; background: var(--bg); padding: 12px; border-radius: 8px; }
+
+  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+  .empty-state i { font-size: 3rem; margin-bottom: 15px; display: block; color: var(--border); }
+
+  @media (max-width: 768px) { nav { padding: 1rem; } .nav-links { gap: 1rem; } .search-box { flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="home.html" class="logo">Grievance<span>Portal</span></a>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="index.html">Submit</a>
+    <a href="track.html" style="color: var(--accent);">Track Status</a>
+    <a href="admin.html" class="nav-btn"><i class="fas fa-user-shield"></i> Admin</a>
+  </div>
+</nav>
+
+<main>
+  <div class="search-card">
+    <h2>Track Your <span>Grievance</span></h2>
+    <p>Enter the email address you used while submitting the complaint to check its current status.</p>
+    <div class="search-box">
+      <input type="email" id="emailInput" placeholder="Enter your email address (e.g., student@college.edu)">
+      <button class="search-btn" onclick="searchGrievances()"><i class="fas fa-search"></i> Track</button>
+    </div>
+  </div>
+
+  <div id="resultsContainer">
+    <div class="empty-state">
+      <i class="fas fa-magnifying-glass"></i>
+      <p>Your complaints will appear here after you search.</p>
+    </div>
+  </div>
+</main>
+
+<script>
+  async function searchGrievances() {
+    const email = document.getElementById('emailInput').value.trim();
+    const container = document.getElementById('resultsContainer');
+
+    if (!email) {
+      alert("Please enter an email address.");
+      return;
+    }
+
+    container.innerHTML = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Searching database...</p></div>`;
+
+    try {
+      const res = await fetch(`http://localhost:8080/track/${email}`);
+      const data = await res.json();
+
+      container.innerHTML = ''; 
+
+      if (data.length === 0) {
+        container.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>No complaints found for this email address.</p></div>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const statusClass = (item.status || 'Pending').replace(/\s+/g, '');
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        card.innerHTML = `
+          <div class="result-top">
+            <span class="result-title">${item.title || 'No Title'}</span>
+            <span class="status-badge status-${statusClass}">${item.status || 'Pending'}</span>
+          </div>
+          <div class="result-meta">
+            <span><i class="fas fa-tags"></i> ${item.category || 'N/A'}</span> &nbsp;&nbsp;
+            <span><i class="fas fa-map-pin"></i> ${item.location || 'N/A'}</span> &nbsp;&nbsp;
+            <span><i class="fas fa-calendar"></i> ${new Date().toLocaleDateString()}</span>
+          </div>
+          <div class="result-desc">${item.description || 'No description provided.'}</div>
+        `;
+        container.appendChild(card);
+      });
+
+    } catch (err) {
+      container.innerHTML = `<div class="empty-state" style="color:var(--error)"><i class="fas fa-exclamation-triangle"></i><p>Failed to connect to server. Is Spring Boot running?</p></div>`;
+    }
+  }
+</script>
+
+</body>
+</html>

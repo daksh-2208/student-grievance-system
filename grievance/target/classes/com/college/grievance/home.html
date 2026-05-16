@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grievance Portal - Home</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f4f6f8; --card: #ffffff; --border: #dfe3e8; --fg: #1a2b3c;
+    --muted: #6b7c8d; --accent: #0e7c6b; --accent-light: rgba(14,124,107,0.08);
+    --amber: #d4860a; --radius: 14px;
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--fg); }
+
+  /* NAVBAR */
+  nav { background: white; border-bottom: 1px solid var(--border); padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.5rem; color: var(--fg); text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-weight: 700; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-btn { background: var(--accent); color: white !important; padding: 10px 20px; border-radius: 8px; transition: background 0.2s; }
+  .nav-btn:hover { background: #0b6b5c !important; }
+
+  /* HERO SECTION */
+  .hero { padding: 6rem 2rem; text-align: center; background: linear-gradient(180deg, #e8f5f1 0%, var(--bg) 100%); }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 1.15rem; max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: white; padding: 16px 32px; border-radius: 12px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: transform 0.15s, box-shadow 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(14,124,107,0.3); }
+  .btn-secondary { background: white; color: var(--fg); border: 2px solid var(--border); padding: 14px 32px; border-radius: 12px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: border-color 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* FEATURES SECTION */
+  .features { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
+  .section-header p { color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+  .feature-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem 2rem; box-shadow: var(--shadow-md); transition: transform 0.2s, border-color 0.2s; }
+  .feature-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+  .icon-circle { width: 50px; height: 50px; background: var(--accent-light); color: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.5rem; }
+  .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.8rem; }
+  .feature-card p { color: var(--muted); line-height: 1.6; font-size: 0.95rem; }
+
+  /* FOOTER */
+  footer { background: #1a2b3c; color: white; padding: 3rem 2rem; text-align: center; margin-top: 3rem; }
+  footer p { opacity: 0.7; font-size: 0.9rem; }
+
+  @media (max-width: 768px) { nav { padding: 1rem; } .nav-links { gap: 1rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="home.html" class="logo">Grievance<span>Portal</span></a>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="index.html">Submit</a>
+    <a href="track.html">Track Status</a>
+    <a href="admin.html" class="nav-btn"><i class="fas fa-user-shield"></i> Admin</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Your Voice <span>Matters</span></h1>
+  <p>A transparent and efficient way to submit, track, and resolve college grievances. We are committed to making your campus experience better.</p>
+  <div class="hero-btns">
+    <a href="index.html" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit a Grievance</a>
+    <a href="track.html" class="btn-secondary"><i class="fas fa-search"></i> Track Status</a>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-header">
+    <h2>How It Works</h2>
+    <p>Follow these simple steps to get your issues resolved.</p>
+  </div>
+  <div class="grid">
+    <div class="feature-card">
+      <div class="icon-circle"><i class="fas fa-pen-to-square"></i></div>
+      <h3>1. Submit Your Complaint</h3>
+      <p>Fill out the grievance form with your details, the category of the issue, and a clear description of the problem.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon-circle"><i class="fas fa-magnifying-glass"></i></div>
+      <h3>2. Track Your Status</h3>
+      <p>Use your email address on the Track Status page to see if your complaint is Pending, Approved, or Resolved.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon-circle"><i class="fas fa-circle-check"></i></div>
+      <h3>3. Issue Resolved</h3>
+      <p>The administration reviews and takes action. The status is updated in real-time on your tracking page.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2024 College Grievance Portal. All Rights Reserved.
+    Made By Daksh with <i class="fas fa-heart" style="color: #e25555;"></i>
+  </p>
+</footer>
+
+</body>
+</html>

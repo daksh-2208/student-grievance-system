@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Grievance Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f4f6f8; --surface: #ffffff; --card: #ffffff; --border: #dfe3e8;
+    --fg: #1a2b3c; --muted: #6b7c8d; --accent: #0e7c6b; --accent-light: rgba(14,124,107,0.08);
+    --error: #c43e3e; --amber: #d4860a; --amber-light: rgba(212,134,10,0.1);
+    --radius: 14px; --shadow-md: 0 4px 20px rgba(0,0,0,0.06); --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; }
+
+  /* NAVBAR */
+  nav { background: white; border-bottom: 1px solid var(--border); padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.5rem; color: var(--fg); text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-weight: 700; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-btn { background: var(--accent); color: white !important; padding: 10px 20px; border-radius: 8px; transition: background 0.2s; }
+  .nav-btn:hover { background: #0b6b5c !important; }
+
+  main { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+  
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .top-bar h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.8rem; color: var(--fg); margin: 0; }
+  .top-bar h1 span { color: var(--accent); }
+  .refresh-btn { padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .refresh-btn:hover { background: #0b6b5c; }
+
+  .table-container { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-lg); }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #f8fafb; text-align: left; padding: 16px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); border-bottom: 1px solid var(--border); }
+  td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; } tr:hover td { background: #fcfdfe; }
+  .status-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .status-Pending { background: var(--amber-light); color: var(--amber); }
+  .status-Approved { background: var(--accent-light); color: var(--accent); }
+  .status-Resolved { background: rgba(14,124,107,0.15); color: #0a5c50; }
+  .status-Rejected { background: rgba(196,62,62,0.08); color: var(--error); }
+  .status-InProgress { background: rgba(54,114,214,0.1); color: #3672d6; }
+  select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; background: white; cursor: pointer; outline: none; }
+  select:focus { border-color: var(--accent); }
+  .empty-state { text-align: center; padding: 4rem 1rem; color: var(--muted); }
+  
+  @media (max-width: 768px) { th, td { padding: 12px 8px; font-size: 0.8rem; } .hide-mobile { display: none; } nav { padding: 1rem; flex-wrap: wrap; gap: 10px; } .nav-links { gap: 1rem; flex-wrap: wrap; } .top-bar { flex-direction: column; gap: 15px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="home.html" class="logo">Grievance<span>Portal</span></a>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="index.html">Submit</a>
+    <a href="track.html">Track Status</a>
+    <a href="admin.html" class="nav-btn"><i class="fas fa-user-shield"></i> Admin</a>
+  </div>
+</nav>
+
+<main>
+  <div class="top-bar">
+    <h1>Admin <span>Dashboard</span></h1>
+    <button class="refresh-btn" onclick="loadData()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Student Info</th>
+          <th>Complaint</th>
+          <th class="hide-mobile">Location</th>
+          <th>Status</th>
+          <th>Change Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr>
+          <td colspan="5" class="empty-state">Loading complaints from database...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+  const tableBody = document.getElementById('tableBody');
+
+  async function loadData() {
+    try {
+      const res = await fetch('http://localhost:8080/all');
+      const data = await res.json();
+      
+      tableBody.innerHTML = ''; 
+
+      if (data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">No complaints found in the database.</td></tr>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        const statusClass = (item.status || 'Pending').replace(/\s+/g, '');
+        row.innerHTML = `
+          <td>
+            <strong>${item.name || 'N/A'}</strong><br>
+            <span style="font-size:0.75rem;color:var(--muted)">${item.email || 'No Email'}</span><br>
+            <span style="font-size:0.75rem;color:var(--muted)">${item.phone || 'No Phone'}</span>
+          </td>
+          <td>
+            <strong>${item.title || 'N/A'}</strong><br>
+            <span style="font-size:0.78rem;color:var(--muted)">${item.description || ''}</span>
+          </td>
+          <td class="hide-mobile">${item.category || 'N/A'}<br><span style="font-size:0.75rem;color:var(--muted)">${item.location || ''}</span></td>
+          <td><span class="status-badge status-${statusClass}">${item.status || 'Pending'}</span></td>
+          <td>
+            <select onchange="updateStatus('${item.id}', this.value)">
+              <option value="Pending" ${item.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="Approved" ${item.status === 'Approved' ? 'selected' : ''}>Approved</option>
+              <option value="In Progress" ${item.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+              <option value="Resolved" ${item.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+              <option value="Rejected" ${item.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+            </select>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    } catch (err) {
+      tableBody.innerHTML = `<tr><td colspan="5" class="empty-state" style="color:var(--error)">Failed to connect to server. Is Spring Boot running?</td></tr>`;
+    }
+  }
+
+  async function updateStatus(id, newStatus) {
+    try {
+      const res = await fetch(`http://localhost:8080/update/${id}?status=${encodeURIComponent(newStatus)}`, {
+        method: 'PUT'
+      });
+
+      if (res.ok) {
+        alert(`Status successfully updated to ${newStatus}!`);
+        loadData(); 
+      } else {
+        alert('Failed to update status.');
+      }
+    } catch (err) {
+      alert('Error connecting to server. Make sure Spring Boot is running.');
+    }
+  }
+
+  loadData();
+</script>
+
+</body>
+</html>
