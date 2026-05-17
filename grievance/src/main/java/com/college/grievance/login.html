@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Grievance Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root { --bg: #f4f6f8; --card: #ffffff; --border: #dfe3e8; --fg: #1a2b3c; --muted: #6b7c8d; --accent: #0e7c6b; --accent-light: rgba(14,124,107,0.08); --accent-glow: rgba(14,124,107,0.15); --amber: #d4860a; --radius: 14px; --shadow-md: 0 4px 20px rgba(0,0,0,0.06); --shadow-lg: 0 12px 40px rgba(0,0,0,0.08); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; }
+  nav { background: white; border-bottom: 1px solid var(--border); padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-md); }
+  .logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.5rem; color: var(--fg); text-decoration: none; } .logo span { color: var(--accent); }
+  .login-wrapper { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 80px); padding: 2rem; background: linear-gradient(180deg, #e8f5f1 0%, var(--bg) 100%); }
+  .login-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3rem 2.5rem; box-shadow: var(--shadow-lg); width: 100%; max-width: 440px; position: relative; overflow: hidden; }
+  .login-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--amber)); }
+  .logo-section { text-align: center; margin-bottom: 2rem; } .logo-section h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.8rem; color: var(--fg); } .logo-section h1 span { color: var(--accent); } .logo-section p { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; }
+  .field { margin-bottom: 1.5rem; } .field label { display: block; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; } .field label i { margin-right: 5px; color: var(--accent); }
+  .input-box { width: 100%; background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); color: var(--fg); font-family: 'DM Sans', sans-serif; font-size: 1rem; padding: 14px 16px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .input-box:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: #fff; }
+  .login-btn { width: 100%; padding: 15px; border: none; border-radius: var(--radius); background: var(--accent); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 0.5rem; } .login-btn:hover { background: #0b6b5c; transform: translateY(-1px); }
+  .error-msg { color: #c43e3e; font-size: 0.85rem; text-align: center; margin-top: 1rem; display: none; font-weight: 500; }
+  .link-text { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); } .link-text a { color: var(--accent); font-weight: 700; text-decoration: none; } .link-text a:hover { text-decoration: underline; }
+  .demo-credentials { margin-top: 1.5rem; padding: 1.2rem; background: var(--bg); border-radius: var(--radius); border: 1px dashed var(--border); }
+  .demo-credentials h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.8rem; text-align: center; }
+  .demo-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 0.85rem; color: var(--fg); } .demo-row strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="login.html" class="logo">Grievance<span>Portal</span></a>
+</nav>
+
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="logo-section">
+      <h1>Grievance<span>Portal</span></h1>
+      <p>Please login to continue</p>
+    </div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="field">
+        <label><i class="fas fa-envelope"></i> Email</label>
+        <input type="email" id="email" class="input-box" placeholder="Enter your email" required>
+      </div>
+      <div class="field">
+        <label><i class="fas fa-lock"></i> Password</label>
+        <input type="password" id="password" class="input-box" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</button>
+      <div class="error-msg" id="errorMsg">Invalid email or password!</div>
+    </form>
+
+    <div class="link-text">
+      Don't have an account? <a href="signup.html">Sign up here</a>
+    </div>
+
+    <div class="demo-credentials">
+      <h4>Default Demo Logins</h4>
+      <div class="demo-row">
+        <span>Student:</span> <strong>student@college.edu / student123</strong>
+      </div>
+      <div class="demo-row">
+        <span>Admin:</span> <strong>admin@college.edu / admin123</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const errorMsg = document.getElementById('errorMsg');
+
+    // 1. Check hardcoded default accounts
+    if (email === 'student@college.edu' && password === 'student123') {
+      localStorage.setItem('userRole', 'student');
+      window.location.href = 'home.html';
+      return;
+    } else if (email === 'admin@college.edu' && password === 'admin123') {
+      localStorage.setItem('userRole', 'admin');
+      window.location.href = 'admin.html';
+      return;
+    }
+
+    // 2. Check LocalStorage for accounts created via Signup page
+    let users = JSON.parse(localStorage.getItem('portalUsers')) || [];
+    const foundUser = users.find(u => u.email === email && u.password === password);
+
+    if (foundUser) {
+      localStorage.setItem('userRole', foundUser.role);
+      if (foundUser.role === 'admin') {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'home.html';
+      }
+    } else {
+      // 3. If not found anywhere, show error
+      errorMsg.style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
